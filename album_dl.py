@@ -1,5 +1,6 @@
+from __future__ import unicode_literals
 from spotipy.oauth2 import SpotifyClientCredentials
-import spotify_config, spotipy, os, requests, bs4
+import spotify_config, spotipy, os, requests, bs4, youtube_dl
 
 print("Enter the artist name")
 artist = input()
@@ -14,6 +15,7 @@ else:
 print("Enter the album name you want to dl")
 album_name = input()
 
+# creating directory for downloaded songs
 print('creating directory for album...')
 dir = ''
 try:
@@ -60,7 +62,13 @@ for track in track_names:
   soup = bs4.BeautifulSoup(res.text, "html.parser")
   # selecting the specific tag to get the link
   ol = soup.select('ol .item-section a')
-  link = 'youtube.com'+ol[3].get('href')  
+  link = 'https://www.youtube.com'+ol[3].get('href')  
   links.append(link)
 
 print(links)
+
+# downloading the videos
+os.chdir(dir)
+ydl_opts = {'format': 'bestaudio/best'}
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+  ydl.download(links)
