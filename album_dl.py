@@ -48,7 +48,7 @@ albums = sp.artist_albums(artist_id, limit=30)
 track_names = []
 for album in albums['items']:
   # matching album name for downlaod
-  if album['name'].lower() == album_name:
+  if album['name'].lower() == album_name.lower():
     tracks = sp.album_tracks(album['uri'])
     # list comprehens to generate an array with the track names
     track_names = [track['name'] for track in tracks['items']]
@@ -63,8 +63,13 @@ for track in track_names:
   soup = bs4.BeautifulSoup(res.text, "html.parser")
   # getting links from the a tags inside h3
   vid_id = soup.select('h3 > a')
-  link = 'https://www.youtube.com'+vid_id[0].get('href')  
-  links.append(link)
+  link = 'https://www.youtube.com'+vid_id[0].get('href') 
+  
+  # checking for wrong video ids, through length of link
+  if len(link) > 43:
+    print('link too big, wrong link')
+  else:
+    links.append(link)
 
 print(links)
 
@@ -72,7 +77,10 @@ print(links)
 os.chdir(dir)
 ydl_opts = {'format': 'bestaudio/best'}
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+  # try:
   ydl.download(links)
+  # except youtube_dl.utils.DownloadError:
+  #   print('moving on...')  
 
 # regex to get the song name before the extension
 name_regex =  re.compile(r'^.*(?=(\.))')
