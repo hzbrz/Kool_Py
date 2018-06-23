@@ -5,6 +5,7 @@ import spotify_config, spotipy, os, requests, bs4, youtube_dl, re
 print("Enter the artist name")
 artist = input()
 
+# splitting name of artist for YT query
 name_split = artist.split(' ')
 res_artist = ''
 if len(name_split) > 1:
@@ -60,7 +61,7 @@ for track in track_names:
   # getting the url from youtube
   res = requests.get('https://www.youtube.com/results?search_query=' + res_artist + track)
   soup = bs4.BeautifulSoup(res.text, "html.parser")
-  # selecting the specific tag to get the link
+  # getting links from the a tags inside h3
   vid_id = soup.select('h3 > a')
   link = 'https://www.youtube.com'+vid_id[0].get('href')  
   links.append(link)
@@ -80,4 +81,4 @@ for file in os.listdir(dir):
   mo = name_regex.search(file)
   os.rename(dir + '\\' + file, dir + '\\' + mo.group() + '.mp3')
 
-print('turned files into mp3')
+print('\n\nTurned files into mp3')
