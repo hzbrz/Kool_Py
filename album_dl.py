@@ -1,11 +1,21 @@
 from spotipy.oauth2 import SpotifyClientCredentials
-import spotify_config, spotipy
+import spotify_config, spotipy, os
 
 print("Enter the artist name")
 artist = input()
 
 print("Enter the album name you want to dl")
 album_name = input()
+
+print('creating directory for album...')
+dir = ''
+try:
+  dir = r'C:\Users\wazih\Desktop\songs\%s' %(album_name)
+  os.makedirs(dir)
+except WindowsError:
+  dir = r'C:\Users\wazih\Desktop\songs\%s' %(album_name)
+
+print('directory created')
 
 client_credentials_manager = SpotifyClientCredentials(
     spotify_config.spotify_client_ID, spotify_config.spotify_client_SECRET)
