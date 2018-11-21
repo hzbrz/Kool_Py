@@ -75,7 +75,7 @@ print(links)
 
 # downloading the videos
 os.chdir(dir)
-ydl_opts = {'format': 'bestaudio/best'}
+ydl_opts = {'outtmpl': '%(title)s'}
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
   # try:
   ydl.download(links)
