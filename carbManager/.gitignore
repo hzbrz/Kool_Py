@@ -1,3 +1,5 @@
 scrapy.cfg
 cred.txt
 loginform.py
+debug.log
+__pycache__
