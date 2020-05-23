@@ -23,7 +23,6 @@ def carbManagerStats(email_cred, password_cred, driver):
   total_arr = totals.split(' ')
   name, carb, fat, protein, cals = tuple(total_arr)
 
-
   data = dict(
     name = name,
     carb = carb,
