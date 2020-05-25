@@ -2,9 +2,15 @@ from selenium import webdriver
 import pymongo
 import json
 from bson import ObjectId
+import base64
 from carb_scraper import carbManagerStats
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+
+path = "C:\\Users\\wazih\\Desktop\\PFE\\api_projects\\carb_api"
+with open(path+"\\monog.txt", 'r') as infile:
+  mongopass = infile.read()
+
+myclient = pymongo.MongoClient("mongodb+srv://hz1:" + mongopass + "@caloriecluster-bmq1f.mongodb.net/test?retryWrites=true&w=majority")
 mydb = myclient["calendarDB"]
 
 calorie_coll = mydb["calories"]
@@ -15,10 +21,14 @@ users = user_coll.find()
 if users.count() == 0:
   print("No users exist")
 else:
-  path = "C:\\Users\\wazih\\Desktop\\PFE\\api_projects\\carb-api"
-  with open(path+"\\passwords.json", 'r') as infile:
+  with open(path+"\\justanotherfile.json", 'r') as infile:
     file_data = infile.read()
-    json_data = json.loads(file_data)
+    print(file_data)
+    read_bytes = base64.b64decode(file_data)
+    read_ascii = read_bytes.decode('ascii')
+    print(read_ascii)
+    read_ascii = read_ascii.replace("'", "\"")
+    json_data = json.loads(read_ascii)
 
   for user in users:
     # counter for how many times to check for the UI error
