@@ -11,8 +11,8 @@ path = "C:\\Users\\wazih\\Desktop\\PFE\\api_projects\\carb_api"
 with open(path+"\\monog.txt", 'r') as infile:
   mongopass = infile.read()
 
-# myclient = pymongo.MongoClient("mongodb+srv://hz1:" + mongopass + "@caloriecluster-bmq1f.mongodb.net/test?retryWrites=true&w=majority")
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = pymongo.MongoClient("mongodb+srv://hz1:" + mongopass + "@caloriecluster-bmq1f.mongodb.net/test?retryWrites=true&w=majority")
+# myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["calendarDB"]
 
 calorie_coll = mydb["calories"]
